@@ -11,10 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OrderDispatchController extends Controller
 {
-    private function CalculateDistance(Store $store, Driver $driver)
-    {
-        return $this->HaversineDistance($store, $driver);
-    }
     // este metodo es invocado cuando se crea la orden (pedido)
     public function DispatchOrder(Request $request)
     {
@@ -26,21 +22,23 @@ class OrderDispatchController extends Controller
         $order->order_status_id = $order_status->id;
         $order->description = $request->description;
 
-        $drivers = Driver::all()->toArray();
-        $new_drivers = array_map(array($order, 'CalculateDistance'), $drivers);
-        arsort($new_drivers);
-        $driver = current($new_drivers);
+        $available_drivers = Driver::GetAvailableDrivers();
+        if (count($available_drivers) == 0)
+        {
+            return response()->json([
+                'message' => 'There is not an available driver'
+            ], Response::HTTP_ACCEPTED);
+        }
+        $array_drivers_with_distances = array_map(array($order, 'CalculateDistance'), $available_drivers);
+        arsort($array_drivers_with_distances);
+        $nearest_driver = current($array_drivers_with_distances);
 
-        //dd($driver);
-        $nearest_driver = Driver::find($driver[0]);
-        $nearest_driver->available = false;
-        $nearest_driver->save();
-
-        $order->driver_id = $nearest_driver->id;
+        $available_driver = Driver::SetStatusAvailable($nearest_driver[0]);
+        $order->driver_id = $available_driver->id;
         $order->save();
 
         return response()->json([
-            'message' => 'driver has an order'
+            'message' => 'driver '. $available_driver->id . ' has an order'
         ], Response::HTTP_OK);
     }
 }

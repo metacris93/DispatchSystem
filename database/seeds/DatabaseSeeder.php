@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->truncateTables(['stores', 'drivers', 'orders', 'order_status']);
+        $this->call(MaxNumberOfOrdersSeeder::class);
         $this->call(StoresTableSeeder::class);
         $this->call(DriversTableSeeder::class);
         $this->call(OrderStatusSeeder::class);
