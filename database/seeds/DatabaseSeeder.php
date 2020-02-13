@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -14,6 +13,7 @@ class DatabaseSeeder extends Seeder
         $this->truncateTables(['stores', 'drivers', 'orders']);
         $this->call(StoresTableSeeder::class);
         $this->call(DriversTableSeeder::class);
+        $this->call(OrderStatusSeeder::class);
     }
     protected function truncateTables(array $tables)
     {
