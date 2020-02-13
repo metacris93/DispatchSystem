@@ -17,6 +17,7 @@ class CreateDriversTable extends Migration
             $table->bigIncrements('id');
             $table->decimal('lat', 11, 8);
             $table->decimal('lng', 11, 8);
+            $table->boolean('available')->default(0);
             //$table->timestamps();
         });
     }

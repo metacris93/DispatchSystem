@@ -10,10 +10,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->truncateTables(['stores', 'drivers', 'orders']);
+        $this->truncateTables(['stores', 'drivers', 'orders', 'order_status']);
         $this->call(StoresTableSeeder::class);
         $this->call(DriversTableSeeder::class);
         $this->call(OrderStatusSeeder::class);
+        $this->call(OrderSeeder::class);
     }
     protected function truncateTables(array $tables)
     {

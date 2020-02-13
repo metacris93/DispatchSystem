@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('store_id')->references('id')->on('stores');
             $table->decimal('lat', 11, 8);
             $table->decimal('lng', 11, 8);
-            //$table->timestamps();
+            $table->string('description', 100)->default('');
         });
     }
 
