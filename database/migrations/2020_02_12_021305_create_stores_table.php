@@ -17,6 +17,7 @@ class CreateStoresTable extends Migration
             $table->bigIncrements('id');
             $table->decimal('lat', 11, 8);
             $table->decimal('lng', 11, 8);
+            $table->string('name', 10);
             //$table->timestamps();
         });
     }
