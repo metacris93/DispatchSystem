@@ -16,8 +16,14 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('drivers/{id}/orders', 'DriverController@getOrders');
+
 Route::get('stores', 'StoreController@index');
 
 Route::post('orders', 'OrderController@store');
-Route::get('orders', 'OrderController@index');
+Route::get('orders', 'OrderController@getAllOrders');
+Route::get('orders/{id}', 'OrderController@index');
+//Route::get('test', 'OrderController@test');
+
 Route::post('neworder', 'OrderDispatchController@DispatchOrder');

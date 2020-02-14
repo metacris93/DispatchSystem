@@ -9,7 +9,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OrderController extends Controller
 {
-    public function index()
+    /*public function test()
+    {
+        $orders = Order::with('drivers')->get();
+        dd($orders);
+    }*/
+    public function index(Request $request)
+    {
+        $order = Order::find($request->id);
+        if ($order == null)
+        {
+            return response()->json(["message" => "Order not found"], Response::HTTP_NOT_FOUND);
+        }
+        return response($order->toJson(), Response::HTTP_OK);
+    }
+    public function getAllOrders()
     {
         $orders = Order::all()->toJson();
         return response($orders, Response::HTTP_OK);

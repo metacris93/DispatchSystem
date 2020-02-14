@@ -10,7 +10,13 @@ class Order extends Model
      FOREIGN KEY : store_id , order_status_id, driver_id 
     */
     public $timestamps = false;
-    //protected $fillable = ['lat', 'lng'];
+    /*protected $appends = ['driver_name', 'driver_lat', 'driver_lng'];
+
+    public function getDriverName()
+    {
+        return $this->attibutes['']
+    }*/
+
     public function CalculateDistance($driver)
     {
         return $this->HaversineDistance($driver);
