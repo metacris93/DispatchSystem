@@ -11,13 +11,14 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        $order = Order::where('id', '=', $request->id)->get();
+        $orders = Order::where('store_id', '=', $request->id)->get();
+        //$order = Order::where('id', '=', $request->id)->get();
         //$order = Order::find($request->id)->toArray();
-        if ($order == null)
+        if ($orders == null)
         {
             return response()->json(["message" => "Order not found"], Response::HTTP_NOT_FOUND);
         }
-        return response()->json($order, Response::HTTP_OK);
+        return response()->json($orders, Response::HTTP_OK);
     }
     public function getAllOrders()
     {
